@@ -12,6 +12,7 @@ const rerenderEntireThree = () => {
         <React.StrictMode>
             <BrowserRouter>
                 <App
+
                     addPost={addPost}
                     posts={state.profilePage.posts}
                     dialogs={state.dialogsPage.dialogs}
