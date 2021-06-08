@@ -1,7 +1,7 @@
 import React from 'react';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
-import state, {addPost, subcribe, updateNewPostText} from "./redux/state";
+import store from "./redux/state";
 import ReactDOM from "react-dom";
 import {BrowserRouter} from "react-router-dom";
 import App from "./App";
@@ -12,13 +12,11 @@ const rerenderEntireThree = () => {
         <React.StrictMode>
             <BrowserRouter>
                 <App
-
-                    addPost={addPost}
-                    posts={state.profilePage.posts}
-                    dialogs={state.dialogsPage.dialogs}
-                    messages={state.dialogsPage.messages}
-                    newPostText={state.profilePage.newPostText}
-                    updateNewPostText={updateNewPostText}
+                    dispatch={store.dispatch.bind(store)}
+                    posts={store._state.profilePage.posts}
+                    dialogs={store._state.dialogsPage.dialogs}
+                    messages={store._state.dialogsPage.messages}
+                    newPostText={store._state.profilePage.newPostText}
                 />,
             </BrowserRouter>
         </React.StrictMode>,
@@ -26,7 +24,7 @@ const rerenderEntireThree = () => {
     );
 };
 rerenderEntireThree()
-subcribe(rerenderEntireThree)
+store.subscriber(rerenderEntireThree)
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: http://bit.ly/CRA-PWA
