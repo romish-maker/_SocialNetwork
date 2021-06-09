@@ -4,13 +4,11 @@ import Navbar from "./components/Navbar/Navbar";
 import Header from "./components/Header/Header";
 import Dialogs from "./components/Dialogs/Dialogs";
 import Profile from "./components/Profile/Profile";
-import store, {
-    AddPostActionType,
+import {
+    ActionsTypes,
     DialogsType,
     MessagesType,
     PostsType,
-    StoreType,
-    UpdateNewPostTextActionType
 } from "./redux/state";
 import {Route} from 'react-router-dom';
 
@@ -20,8 +18,10 @@ type PropsType = {
     dialogs: Array<DialogsType>
     messages: Array<MessagesType>
     newPostText: string
-    dispatch: (action: AddPostActionType | UpdateNewPostTextActionType) => void
+    dispatch: (action: ActionsTypes) => void
+    newMessageBody: string
 }
+
 function App(props: PropsType) {
     return (
         <div className={'app-wrapper'}>
@@ -41,6 +41,8 @@ function App(props: PropsType) {
                         <Dialogs
                             dialogs={props.dialogs}
                             messages={props.messages}
+                            dispatch={props.dispatch}
+                            newMessageBody={props.newMessageBody}
                         />
                     }
                 />

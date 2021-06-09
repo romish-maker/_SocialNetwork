@@ -17,6 +17,7 @@ const rerenderEntireThree = () => {
                     dialogs={store._state.dialogsPage.dialogs}
                     messages={store._state.dialogsPage.messages}
                     newPostText={store._state.profilePage.newPostText}
+                    newMessageBody={store._state.dialogsPage.newMessageBody}
                 />,
             </BrowserRouter>
         </React.StrictMode>,
