@@ -19,4 +19,9 @@
 .messages .message {
     color: white;
 }
+.area {
+    overflow: hidden;
+    resize: none;
+    min-height: 10vh;
+}
 

@@ -9,7 +9,7 @@ import {
     DialogsType,
     MessagesType,
     PostsType,
-} from "./redux/state";
+} from "./redux/store";
 import {Route} from 'react-router-dom';
 
 
