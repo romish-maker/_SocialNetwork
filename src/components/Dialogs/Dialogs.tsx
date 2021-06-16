@@ -2,14 +2,14 @@ import React, {ChangeEvent, KeyboardEvent} from 'react';
 import s from './Dialogs.module.css';
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
-import {ActionsTypes, DialogsType, MessagesType,} from "../../redux/store";
+import {DialogsType, MessagesType,} from "../../redux/store";
 import {SendBodyMessageActionCreator, UpdateNewBodyMessageActionCreator} from "../../redux/dialogs-reducer";
 
 
 type PropsType = {
     dialogs: Array<DialogsType>
     messages: Array<MessagesType>
-    dispatch: (action: ActionsTypes) => void
+    dispatch: any
     newMessageBody: string
 }
 

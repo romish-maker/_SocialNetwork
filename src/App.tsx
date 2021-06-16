@@ -5,12 +5,11 @@ import Header from "./components/Header/Header";
 import Dialogs from "./components/Dialogs/Dialogs";
 import Profile from "./components/Profile/Profile";
 import {
-    ActionsTypes,
     DialogsType,
     MessagesType,
-    PostsType,
 } from "./redux/store";
 import {Route} from 'react-router-dom';
+import {PostsType} from "./redux/profile-reducer";
 
 
 type PropsType = {
@@ -18,7 +17,7 @@ type PropsType = {
     dialogs: Array<DialogsType>
     messages: Array<MessagesType>
     newPostText: string
-    dispatch: (action: ActionsTypes) => void
+    dispatch: (action: any) => void
     newMessageBody: string
 }
 

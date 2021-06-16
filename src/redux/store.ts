@@ -1,8 +1,8 @@
-import {AddPostActionType, profileReducer, UpdateNewPostTextActionType} from "./profile-reducer";
+import {AddPostActionType, PostsType, profileReducer, UpdateNewPostTextActionType} from "./profile-reducer";
 import {dialogsReducer, SendBodyMessageActionCreator, UpdateNewBodyMessageActionCreator} from "./dialogs-reducer";
 import {sidebarReducer} from "./sidebar-reducer";
 
-export type StoreType = {
+type StoreType = {
     _state: RootStateType
     getState: () => RootStateType
     _CallSubscriber: () => void
@@ -73,11 +73,7 @@ export type DialogsType = {
     id: number
     name: string
 }
-export type PostsType = {
-    id: number
-    postMessage: string
-    likesCount: number
-}
+
 export type ProfilePageType = {
     newPostText: string
     posts: Array<PostsType>
@@ -88,7 +84,7 @@ export type DialogPageType = {
     newMessageBody: string
 }
 export type SidebarType = {}
-export type RootStateType = {
+type RootStateType = {
     profilePage: ProfilePageType
     dialogsPage: DialogPageType
     sidebar: SidebarType
