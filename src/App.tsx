@@ -2,23 +2,15 @@ import React from 'react';
 import './App.css';
 import Navbar from "./components/Navbar/Navbar";
 import Header from "./components/Header/Header";
-import Dialogs from "./components/Dialogs/Dialogs";
 import Profile from "./components/Profile/Profile";
-import {
-    DialogsType,
-    MessagesType,
-} from "./redux/store";
 import {Route} from 'react-router-dom';
-import {PostsType} from "./redux/profile-reducer";
+import {RootStateType} from "./redux/redux-store";
+import DialogsContainer from "./components/Dialogs/DialogsContainer";
 
 
 type PropsType = {
-    posts: Array<PostsType>
-    dialogs: Array<DialogsType>
-    messages: Array<MessagesType>
-    newPostText: string
+    state: RootStateType
     dispatch: (action: any) => void
-    newMessageBody: string
 }
 
 function App(props: PropsType) {
@@ -29,19 +21,16 @@ function App(props: PropsType) {
             <div className={'app-wrapper-content'}>
                 <Route path={'/profile'}
                        render={() =>
-                           <Profile posts={props.posts}
+                           <Profile state={props.state}
                                     dispatch={props.dispatch}
-                                    newPostText={props.newPostText}
                            />
                        }/>
                 <Route
                     path={'/dialogs'}
                     render={() =>
-                        <Dialogs
-                            dialogs={props.dialogs}
-                            messages={props.messages}
+                        <DialogsContainer
+                            state={props.state}
                             dispatch={props.dispatch}
-                            newMessageBody={props.newMessageBody}
                         />
                     }
                 />

@@ -13,11 +13,7 @@ const rerenderEntireThree = (state: RootStateType) => {
             <BrowserRouter>
                 <App
                     dispatch={store.dispatch.bind(store)}
-                    posts={state.profilePage.posts}
-                    dialogs={state.dialogPage.dialogs}
-                    messages={state.dialogPage.messages}
-                    newPostText={state.profilePage.newPostText}
-                    newMessageBody={state.dialogPage.newMessageBody}
+                    state={state}
                 />,
             </BrowserRouter>
         </React.StrictMode>,

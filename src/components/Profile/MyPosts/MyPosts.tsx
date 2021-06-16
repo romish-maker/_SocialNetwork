@@ -1,13 +1,14 @@
 import React from 'react';
 import s from './MyPosts.module.css';
 import Post from './Post/Post';
-import {AddPostActionCreator, PostsType, UpdateNewPostTextActionCreator} from "../../../redux/profile-reducer";
+import {PostsType} from "../../../redux/profile-reducer";
 
 
 type PropsType = {
     posts: Array<PostsType>
     newPostText: string
-    dispatch: (action: any) => void
+    UpdateNewPostText: (text: string) => void;
+    addPost: () => void;
 }
 
 const MyPosts: React.FC<PropsType> = (props) => {
@@ -16,14 +17,14 @@ const MyPosts: React.FC<PropsType> = (props) => {
 
     const newPostElement = React.createRef<HTMLTextAreaElement>()
 
-    let addPost = () => {
-        props.dispatch(AddPostActionCreator());
+    let onAddPost = () => {
+        props.addPost()
     }
     let onPostChange = () => {
-        if (newPostElement.current) {
-            let text = newPostElement.current.value
-            props.dispatch(UpdateNewPostTextActionCreator(text))
-        }
+         if (newPostElement.current) {
+             let text = newPostElement.current.value
+             props.UpdateNewPostText(text)
+         }
     }
     return (
         <div className={s.postsBlock}>
@@ -33,7 +34,7 @@ const MyPosts: React.FC<PropsType> = (props) => {
                     <textarea ref={newPostElement} onChange={onPostChange} value={props.newPostText}/>
                 </div>
                 <div>
-                    <button onClick={addPost}>Add post</button>
+                    <button onClick={onAddPost}>Add post</button>
                 </div>
             </div>
             <div className={s.posts}>

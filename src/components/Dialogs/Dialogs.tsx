@@ -1,35 +1,29 @@
-import React, {ChangeEvent, KeyboardEvent} from 'react';
+import React, {ChangeEvent} from 'react';
 import s from './Dialogs.module.css';
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
-import {DialogsType, MessagesType,} from "../../redux/store";
-import {SendBodyMessageActionCreator, UpdateNewBodyMessageActionCreator} from "../../redux/dialogs-reducer";
+import {RootStateType} from "../../redux/redux-store";
 
 
 type PropsType = {
-    dialogs: Array<DialogsType>
-    messages: Array<MessagesType>
-    dispatch: any
-    newMessageBody: string
+    state: RootStateType
+    dispatch: (action: any) => void
+    updateNewBodyMessage: (body: string) => void
+    SendBodyMessage: () => void
 }
 
 export const Dialogs = (props: PropsType) => {
 
     const addPost = () => {
-        props.dispatch(SendBodyMessageActionCreator())
+        props.SendBodyMessage();
     }
     const onChangeHandler = (event: ChangeEvent<HTMLTextAreaElement>) => {
         let body = event.currentTarget.value
-        props.dispatch(UpdateNewBodyMessageActionCreator(body))
+        props.updateNewBodyMessage(body)
     }
 
-    const onEnter = ({charCode}: KeyboardEvent<HTMLTextAreaElement>) => {
-        if (charCode === 13) {
-            props.dispatch(SendBodyMessageActionCreator())
-        }
-    }
-    let dialogsElements = props.dialogs.map(d => <DialogItem name={d.name} id={d.id}/>);
-    let messagesElements = props.messages.map(m => <Message messages={m.message}/>);
+    let dialogsElements = props.state.dialogPage.dialogs.map(d => <DialogItem name={d.name} id={d.id}/>);
+    let messagesElements = props.state.dialogPage.messages.map(m => <Message messages={m.message}/>);
 
     return (
         <div className={s.dialogs}>
@@ -40,8 +34,8 @@ export const Dialogs = (props: PropsType) => {
                 {messagesElements}
             </div>
             <div>
-                <textarea className={s.area} onKeyPress={onEnter} value={props.newMessageBody}
-                          onChange={onChangeHandler}>{props.newMessageBody}</textarea>
+                <textarea className={s.area} value={props.state.dialogPage.newMessageBody}
+                          onChange={onChangeHandler}>{props.state.dialogPage.newMessageBody}</textarea>
             </div>
             <div>
                 <button onClick={addPost}>Add post</button>
