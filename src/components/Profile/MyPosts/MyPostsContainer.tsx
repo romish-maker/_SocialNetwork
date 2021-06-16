@@ -32,8 +32,3 @@ const MyPostsContainer: React.FC<PropsForContainerType> = (props) => {
 }
 
 export default MyPostsContainer;
-// передача стора и его типизация,
-// addPost and UpdateNewPostText передавать аж до верхушки к index.tsx
-// Димыч вызывает в Profile.tsx контейнерную компоненту
-// и передает туда только store.tsx которая сидит в пропсах, а я не передавал, что делать?
-// В Profile компонента Dialogs принимает весь стейт только
