@@ -74,11 +74,11 @@ export type DialogsType = {
     name: string
 }
 
-export type ProfilePageType = {
+type ProfilePageType = {
     newPostText: string
     posts: Array<PostsType>
 }
-export type DialogPageType = {
+type DialogPageType = {
     dialogs: Array<DialogsType>
     messages: Array<MessagesType>
     newMessageBody: string

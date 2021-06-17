@@ -1,5 +1,12 @@
-import {DialogPageType} from "./store";
-const initialState = {
+import {DialogsType, MessagesType} from "./store";
+
+export type DialogPageType = {
+    dialogs: Array<DialogsType>
+    messages: Array<MessagesType>
+    newMessageBody: string
+}
+
+const initialState: DialogPageType = {
         dialogs: [
             {id: 1, name: 'Archi'},
             {id: 2, name: 'Kot'},

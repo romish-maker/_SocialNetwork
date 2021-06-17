@@ -28,10 +28,7 @@ function App(props: PropsType) {
                 <Route
                     path={'/dialogs'}
                     render={() =>
-                        <DialogsContainer
-                            state={props.state}
-                            dispatch={props.dispatch}
-                        />
+                        <DialogsContainer/>
                     }
                 />
             </div>

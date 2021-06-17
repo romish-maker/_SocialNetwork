@@ -13,9 +13,7 @@ export function Profile(props: PropsType) {
     return (
         <div className={s.main}>
             <ProfileInfo/>
-            <MyPostsContainer state={props.state}
-                              dispatch={props.dispatch}
-            />
+            <MyPostsContainer />
         </div>
     );
 }
