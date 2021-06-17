@@ -2,8 +2,7 @@ import React, {ChangeEvent} from 'react';
 import s from './Dialogs.module.css';
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
-import {DialogsType, MessagesType} from "../../redux/store";
-import {DialogPageType} from "../../redux/dialogs-reducer";
+import {DialogPageType, DialogsType, MessagesType} from "../../redux/dialogs-reducer";
 
 
 type PropsType = {
@@ -23,8 +22,8 @@ export const Dialogs = (props: PropsType) => {
         props.updateNewBodyMessage(body.toString())
     }
 
-    let dialogsElements = props.dialogPage.dialogs.map((d: DialogsType) => <DialogItem name={d.name} id={d.id}/>);
-    let messagesElements = props.dialogPage.messages.map((m: MessagesType) => <Message messages={m.message}/>);
+    let dialogsElements = props.dialogPage.dialogs.map((d: DialogsType) => <DialogItem name={d.name} key={d.id} id={d.id}/>);
+    let messagesElements = props.dialogPage.messages.map((m: MessagesType) => <Message messages={m.message} key={m.id}/>);
 
     return (
         <div className={s.dialogs}>

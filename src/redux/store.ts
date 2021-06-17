@@ -1,6 +1,11 @@
 import {AddPostActionType, PostsType, profileReducer, UpdateNewPostTextActionType} from "./profile-reducer";
-import {dialogsReducer, SendBodyMessageActionCreator, UpdateNewBodyMessageActionCreator} from "./dialogs-reducer";
-import {sidebarReducer} from "./sidebar-reducer";
+import {
+    DialogPageType,
+    dialogsReducer,
+    SendBodyMessageActionCreator,
+    UpdateNewBodyMessageActionCreator
+} from "./dialogs-reducer";
+import {sidebarReducer, SidebarType} from "./sidebar-reducer";
 
 type StoreType = {
     _state: RootStateType
@@ -65,25 +70,12 @@ let store: any = {
 }
 
 
-export type MessagesType = {
-    id: number
-    message: string
-}
-export type DialogsType = {
-    id: number
-    name: string
-}
+
 
 type ProfilePageType = {
     newPostText: string
     posts: Array<PostsType>
 }
-type DialogPageType = {
-    dialogs: Array<DialogsType>
-    messages: Array<MessagesType>
-    newMessageBody: string
-}
-export type SidebarType = {}
 type RootStateType = {
     profilePage: ProfilePageType
     dialogsPage: DialogPageType
