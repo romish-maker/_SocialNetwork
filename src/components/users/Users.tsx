@@ -4,43 +4,41 @@ import styles from './users.module.css'
 import axios from "axios";
 import avatar from './../../assets/img/images.png';
 
-type PropsType = {
+type UserPropsType = {
     users: UsersType[]
     follow: (userID: number) => void
     unFollow: (userID: number) => void
     setUsers: (users: UsersType[]) => void
 }
-export const Users = (props: PropsType) => {
-    function getUsers() {
-        if (props.users.length === 0) {
-            console.log('props.setUsers')
-            axios.get("https://social-network.samuraijs.com/api/1.0/users").then(response => {
-                props.setUsers(response.data.items)
-            });
-        }
+
+export class Users extends React.Component<UserPropsType> {
+    componentDidMount() {
+        axios.get("https://social-network.samuraijs.com/api/1.0/users").then(response => {
+            this.props.setUsers(response.data.items)
+        });
     }
 
-    return (
-        <div>
-            <button onClick={getUsers}>get users</button>
-            {
-                props.users.map(u => <div key={u.id}>
+    render() {
+        return (
+            <div>
+                {
+                    this.props.users.map(u => <div key={u.id}>
                     <span>
                         <div>
                             <img className={styles.image}
-                                 src={u.photos.large ? u.photos.large : avatar}/>
+                                 src={u.photos.large ? u.photos.large : avatar} alt="users img"/>
                             </div>
                         <div>
                             {u.followed
                                 ? <button onClick={() => {
-                                    props.unFollow(u.id)
+                                    this.props.unFollow(u.id)
                                 }}>UnFollow</button>
                                 : <button onClick={() => {
-                                    props.follow(u.id)
+                                    this.props.follow(u.id)
                                 }}>Follow</button>}
                         </div>
                     </span>
-                    <span>
+                        <span>
                         <span>
                             <div>{u.name}</div>
                             <div>{u.status}</div>
@@ -50,11 +48,10 @@ export const Users = (props: PropsType) => {
                             <div>{"u.location.cisty"}</div>
                         </span>
                     </span>
-                </div>)
-            }
-        </div>
-    );
-};
-
-export default React.memo(Users)
+                    </div>)
+                }
+            </div>
+        );
+    }
+}
 
