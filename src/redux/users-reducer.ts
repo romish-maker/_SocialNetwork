@@ -5,13 +5,20 @@ export type LocationType = {
     city: string
     country: string
 }
+
+// followed: false
+// id: 17930
+// name: "TotalKrK"
+// photos: {small: null, large: null}
+// status: null
+// uniqueUrlName
 export type UsersType = {
-    id: number
-    photoURL: string
     followed: boolean
-    fullName: string
-    status: string
-    location: LocationType
+    id: number
+    name: string
+    photos: { small: null | string, large: null | string }
+    status: null | string
+    uniqueUrlName: null | string
 }
 const initialState: UsersPageType = {
     users: []
@@ -43,7 +50,7 @@ export const usersReducer = (state: UsersPageType = initialState, action: UsersR
         case 'SET_USERS':
             return {
                 ...state,
-                users: [...state.users, ...action.users]
+                users: action.users
             }
         default:
             return state;

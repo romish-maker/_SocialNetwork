@@ -1,62 +1,35 @@
 import React from 'react';
 import {UsersType} from "../../redux/users-reducer";
 import styles from './users.module.css'
+import axios from "axios";
+import avatar from './../../assets/img/images.png';
 
 type PropsType = {
     users: UsersType[]
     follow: (userID: number) => void
     unFollow: (userID: number) => void
-    setUsers?: (users: UsersType[]) => void
+    setUsers: (users: UsersType[]) => void
 }
 export const Users = (props: PropsType) => {
-    if (props.users.length === 0) {
-        if (props.setUsers) {
-            props.setUsers([
-                    {
-                        id: 1,
-                        photoURL: 'https://bipbap.ru/wp-content/uploads/2017/10/Prikolnye-i-smeshnye-kartinki-na-avatarku-skachat-besplatno-13.jpg',
-                        followed: false,
-                        fullName: 'Romish',
-                        status: 'I am a boss',
-                        location: {
-                            city: 'Almaty',
-                            country: 'Kazakhstan'
-                        }
-                    },
-                    {
-                        id: 2,
-                        photoURL: 'https://bipbap.ru/wp-content/uploads/2017/10/Prikolnye-i-smeshnye-kartinki-na-avatarku-skachat-besplatno-13.jpg',
-                        followed: true,
-                        fullName: 'Behruz',
-                        status: 'I am alone',
-                        location: {
-                            city: 'Moscow',
-                            country: 'Russia'
-                        }
-                    },
-                    {
-                        id: 3,
-                        photoURL: 'https://bipbap.ru/wp-content/uploads/2017/10/Prikolnye-i-smeshnye-kartinki-na-avatarku-skachat-besplatno-13.jpg',
-                        followed: false,
-                        fullName: 'Ramil',
-                        status: 'Bitcoin',
-                        location: {city: 'Dushanbe', country: 'Tajikistan'}
-                    }
-
-                ]
-            )
+    function getUsers() {
+        if (props.users.length === 0) {
+            console.log('props.setUsers')
+            axios.get("https://social-network.samuraijs.com/api/1.0/users").then(response => {
+                props.setUsers(response.data.items)
+            });
         }
     }
 
-
     return (
         <div>
+            <button onClick={getUsers}>get users</button>
             {
                 props.users.map(u => <div key={u.id}>
                     <span>
                         <div>
-                            <img className={styles.image} src={u.photoURL}/>
-                        </div>
+                            <img className={styles.image}
+                                 src={u.photos.large ? u.photos.large : avatar}/>
+                            </div>
                         <div>
                             {u.followed
                                 ? <button onClick={() => {
@@ -69,12 +42,12 @@ export const Users = (props: PropsType) => {
                     </span>
                     <span>
                         <span>
-                            <div>{u.fullName}</div>
+                            <div>{u.name}</div>
                             <div>{u.status}</div>
                         </span>
                         <span>
-                            <div>{u.location.country}</div>
-                            <div>{u.location.city}</div>
+                            <div>{"u.location.country"}</div>
+                            <div>{"u.location.cisty"}</div>
                         </span>
                     </span>
                 </div>)
@@ -82,4 +55,6 @@ export const Users = (props: PropsType) => {
         </div>
     );
 };
+
+export default React.memo(Users)
 
