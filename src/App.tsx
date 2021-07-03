@@ -8,7 +8,6 @@ import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import {UserContainer} from "./components/users/UsersContainer";
 
 
-
 function App() {
     return (
         <div className={'app-wrapper'}>
@@ -24,8 +23,7 @@ function App() {
                     render={() =>
                         <DialogsContainer/>
                     }
-                />
-                <Route
+                /><Route
                     path={'/users'}
                     render={() =>
                         <UserContainer />
