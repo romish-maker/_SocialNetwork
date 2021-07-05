@@ -3,6 +3,7 @@ export type UsersPageType = {
     pageSize: number
     totalUsersCount: number
     currentPage: number
+    isFetching: boolean
 }
 export type LocationType = {
     city: string
@@ -12,7 +13,7 @@ export type UsersType = {
     followed: boolean
     id: number
     name: string
-    photos: { small: null | string, large: null | string }
+    photos: { small: null    | string, large: null | string }
     status: null | string
     uniqueUrlName: null | string
 }
@@ -21,6 +22,7 @@ const initialState: UsersPageType = {
     pageSize: 5,
     totalUsersCount: 0,
     currentPage: 2,
+    isFetching: true
 };
 
 
@@ -56,23 +58,35 @@ export const usersReducer = (state: UsersPageType = initialState, action: UsersR
                 ...state,
                 currentPage: action.currentPage
             }
-            case 'SET_USERS_TOTAL_COUNT':
+        case 'SET_USERS_TOTAL_COUNT':
             return {
                 ...state,
                 totalUsersCount: action.count
+            }
+        case 'TOGGLE_IS_FETCHING':
+            return {
+                ...state,
+                isFetching: action.isFetching
             }
         default:
             return state;
     }
 }
 
-export type UsersReducerType = FollowActionType | UnFollowActionType | SetUsersActionType | SetCurrentActionType | SetUsersTotalCountAC
+export type UsersReducerType =
+    FollowActionType |
+    UnFollowActionType |
+    SetUsersActionType |
+    SetCurrentActionType |
+    ToggleIsFetching |
+    SetUsersTotalCount
 
 export type FollowActionType = ReturnType<typeof followAC>
 export type UnFollowActionType = ReturnType<typeof unFollowAC>
 export type SetUsersActionType = ReturnType<typeof setUsersAC>
 export type SetCurrentActionType = ReturnType<typeof setCurrentPageAC>
-export type SetUsersTotalCountAC = ReturnType<typeof setUsersTotalCountAC>
+export type SetUsersTotalCount = ReturnType<typeof setUsersTotalCountAC>
+export type ToggleIsFetching = ReturnType<typeof toggleIsFetchingAC>
 
 export const followAC = (userID: number) => {
     return {
@@ -102,5 +116,11 @@ export const setUsersTotalCountAC = (totalCount: number) => {
     return {
         type: 'SET_USERS_TOTAL_COUNT',
         count: totalCount
+    } as const
+}
+export const toggleIsFetchingAC = (isFetching: boolean) => {
+    return {
+        type: 'TOGGLE_IS_FETCHING',
+        isFetching
     } as const
 }
