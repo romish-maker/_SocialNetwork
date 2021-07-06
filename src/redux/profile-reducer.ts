@@ -1,6 +1,10 @@
+import {ProfileResponseType} from "../components/Profile/ProfileContainer";
+
 export type ProfilePageType = {
     newPostText: string
     posts: Array<PostsType>
+    profile: ProfileResponseType | null
+
 }
 export type PostsType = {
     id: number
@@ -14,7 +18,8 @@ const initialState:ProfilePageType = {
         {id: 3, postMessage: 'интересная новость', likesCount: 992},
         {id: 4, postMessage: 'Kotik 2d post', likesCount: 43},
     ],
-    newPostText: 'qwe;qwr'
+    newPostText: 'Romish',
+    profile: null
 }
 
 
@@ -37,15 +42,22 @@ export const profileReducer = (state: ProfilePageType = initialState, action: pr
                 newPostText: action.newText
             };
         }
+        case 'SET-USER-PROFILE': {
+            return {
+                ...state,
+                profile: action.profile
+            };
+        }
         default:
             return state;
     }
 }
 
-export type profileReducerType = AddPostActionType | UpdateNewPostTextActionType
+export type profileReducerType = AddPostActionType | UpdateNewPostTextActionType | setUserProfileActionType
 
 export type AddPostActionType = ReturnType<typeof AddPostActionCreator>
 export type UpdateNewPostTextActionType = ReturnType<typeof UpdateNewPostTextActionCreator>
+export type setUserProfileActionType = ReturnType<typeof setUserProfile>
 
 export const AddPostActionCreator = () => {
     return {
@@ -56,5 +68,11 @@ export const UpdateNewPostTextActionCreator = (newText: string) => {
     return {
         type: 'UPDATE-NEW-POST-TEXT',
         newText: newText
+    } as const
+}
+export const setUserProfile = (profile: ProfileResponseType) => {
+    return {
+        type: 'SET-USER-PROFILE',
+        profile
     } as const
 }
