@@ -5,7 +5,7 @@ import Header from "./components/Header/Header";
 import Profile from "./components/Profile/Profile";
 import {Route} from 'react-router-dom';
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
-import {UserContainer} from "./components/users/UsersContainer";
+import UsersContainer from "./components/users/UsersContainer";
 
 
 function App() {
@@ -26,7 +26,7 @@ function App() {
                 /><Route
                     path={'/users'}
                     render={() =>
-                        <UserContainer />
+                        <UsersContainer />
                     }
                 />
             </div>

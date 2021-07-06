@@ -81,44 +81,44 @@ export type UsersReducerType =
     ToggleIsFetching |
     SetUsersTotalCount
 
-export type FollowActionType = ReturnType<typeof followAC>
-export type UnFollowActionType = ReturnType<typeof unFollowAC>
-export type SetUsersActionType = ReturnType<typeof setUsersAC>
-export type SetCurrentActionType = ReturnType<typeof setCurrentPageAC>
-export type SetUsersTotalCount = ReturnType<typeof setUsersTotalCountAC>
-export type ToggleIsFetching = ReturnType<typeof toggleIsFetchingAC>
+export type FollowActionType = ReturnType<typeof follow>
+export type UnFollowActionType = ReturnType<typeof unFollow>
+export type SetUsersActionType = ReturnType<typeof setUsers>
+export type SetCurrentActionType = ReturnType<typeof setCurrentPage>
+export type SetUsersTotalCount = ReturnType<typeof setTotalUsersCount>
+export type ToggleIsFetching = ReturnType<typeof toggleIsFetching>
 
-export const followAC = (userID: number) => {
+export const follow = (userID: number) => {
     return {
         type: 'FOLLOW',
         userID
     } as const
 }
-export const unFollowAC = (userID: number) => {
+export const unFollow = (userID: number) => {
     return {
         type: 'UNFOLLOW',
         userID
     } as const
 }
-export const setUsersAC = (users: Array<UsersType>) => {
+export const setUsers = (users: Array<UsersType>) => {
     return {
         type: 'SET_USERS',
         users
     } as const
 }
-export const setCurrentPageAC = (currentPage: number) => {
+export const setCurrentPage = (currentPage: number) => {
     return {
         type: 'SET_CURRENT_PAGE',
         currentPage
     } as const
 }
-export const setUsersTotalCountAC = (totalCount: number) => {
+export const setTotalUsersCount = (totalCount: number) => {
     return {
         type: 'SET_USERS_TOTAL_COUNT',
         count: totalCount
     } as const
 }
-export const toggleIsFetchingAC = (isFetching: boolean) => {
+export const toggleIsFetching = (isFetching: boolean) => {
     return {
         type: 'TOGGLE_IS_FETCHING',
         isFetching
