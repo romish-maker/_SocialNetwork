@@ -19,8 +19,8 @@ const initialState: AuthType = {
     id: null,
     email: null,
     login: null,
-    isFetching: true,
-    isAuth: true
+    isFetching: false,
+    isAuth: false
 };
 
 

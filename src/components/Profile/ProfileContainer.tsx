@@ -54,7 +54,7 @@ type mapStateToProps = {
     profile: any
 }
 type mapDispatchToProps = {
-    setUserProfile: (profile: any) => void
+    setUserProfile: (profile: ProfileResponseType) => void
 }
 type OwnPropsType = mapStateToProps & mapDispatchToProps
 type PropsType = RouteComponentProps<PathParamsType> & OwnPropsType
