@@ -8,6 +8,7 @@ import {AnyAction, Dispatch} from "redux";
 let mapStateToProps = (state: RootStateType) => {
     return {
         dialogPage: state.dialogPage,
+        isAuth: state.auth.isAuth
     }
 }
 let mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {

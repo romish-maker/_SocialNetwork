@@ -5,7 +5,7 @@ import MyPostsContainer from "./MyPosts/MyPostsContainer";
 import {ProfileResponseType} from "./ProfileContainer";
 
 
-type ProfilePropsType = {
+export type ProfilePropsType = {
     profile: ProfileResponseType  | null
 }
 export function Profile(props: ProfilePropsType) {

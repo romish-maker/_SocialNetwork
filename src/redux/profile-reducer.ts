@@ -1,4 +1,6 @@
 import {ProfileResponseType} from "../components/Profile/ProfileContainer";
+import {StoreDispatchType} from "./redux-store";
+import {profileAPI} from "../api/api";
 
 export type ProfilePageType = {
     newPostText: string
@@ -75,4 +77,9 @@ export const setUserProfile = (profile: ProfileResponseType) => {
         type: 'SET-USER-PROFILE',
         profile
     } as const
+}
+export const getUserProfile = (userId: number) => (dispatch: StoreDispatchType) => {
+    profileAPI.getProfile(userId)
+        .then(response => {dispatch(setUserProfile(response.data));
+        })
 }

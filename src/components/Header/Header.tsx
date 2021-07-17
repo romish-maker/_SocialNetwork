@@ -12,7 +12,7 @@ const Header: React.FC<HeaderPropsType> = ({isAuth, login}) => {
         <img alt="images, beautiful place" src='https://www.freelogodesign.org/Content/img/logo-ex-7.png' />
 
         <div className={s.loginBlock}>
-            { isAuth ? login : <NavLink to={'/login'}><button className={s.btn}>{login}</button></NavLink>}
+            { isAuth ? login : <NavLink to={'/login'}><button className={s.btn}>login</button></NavLink>}
         </div>
     </header>
 }

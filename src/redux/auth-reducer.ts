@@ -1,3 +1,6 @@
+import {StoreDispatchType} from "./redux-store";
+import {authAPI} from "../api/api";
+
 export type DataType = {
     id: number
     email: string
@@ -19,35 +22,59 @@ const initialState: AuthType = {
     id: null,
     email: null,
     login: null,
-    isFetching: false,
+    isFetching: true,
     isAuth: false
 };
 
 
 export const authReducer = (state: AuthType = initialState, action: AuthReducerType): AuthType => {
     switch (action.type) {
+        case 'SET_IS_FETCHING':
+            return {
+                ...state,
+                isFetching: false
+            }
         case 'SET_USER_DATA':
             return {
                 ...state,
                 ...action.data,
-                isAuth: false
+                isAuth: true,
+                isFetching: false
             }
         default:
             return state;
     }
 }
 
-export type AuthReducerType = SetUserDataActionType
 
 export type SetUserDataActionType = ReturnType<typeof setAuthUserDate>
+export type setIsFetchingActionType = ReturnType<typeof setIsFetching>
 
-export const setAuthUserDate = (id: number, email: string , login: string) => {
+export type AuthReducerType = SetUserDataActionType | setIsFetchingActionType
+
+export const setAuthUserDate = (id: number, email: string, login: string) => {
     return {
         type: 'SET_USER_DATA',
         data: {
             id,
             email,
             login
-        } as const
-    }
+        }
+    } as const
+}
+
+export const setIsFetching = () => {
+    return {
+        type: 'SET_IS_FETCHING'
+    } as const
+}
+
+export const getAuthUserData = () => (dispatch: StoreDispatchType) => {
+    authAPI.getAuthMe()
+        .then(response => {
+            if (response.data.resultCode === 0) {
+                let {id, email, login} = response.data.data
+                dispatch(setAuthUserDate(id, email, login))
+            }
+        }).finally(() => dispatch(setIsFetching()))
 }

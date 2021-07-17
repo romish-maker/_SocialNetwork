@@ -1,7 +1,6 @@
 import axios from "axios";
-import {ProfileResponseType} from "../components/Profile/ProfileContainer";
 
-const responsibility = axios.create({
+const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.0/',
     withCredentials: true,
     headers: {
@@ -11,34 +10,32 @@ const responsibility = axios.create({
 
 export const usersAPI = {
     getUsers (currentPage = 1, pageSize = 10)  {
-        return responsibility.get(`users?page=${currentPage}&count=${pageSize}`).then(response => {
+        return instance.get(`users?page=${currentPage}&count=${pageSize}`).then(response => {
             return response.data
         })
     }
 }
 export const authAPI = {
     getAuthMe ()  {
-        return responsibility.get(`auth/me`).then(response => {
-            return response.data
-        })
+        return instance.get(`auth/me`)
     }
 }
 export const followAPI = {
-    unFollow(id: number) {
-        return responsibility.delete(`follow/${id}`).then(response => {
+    follow(id:number) {
+         return instance.post(`follow/${id}`).then(response => {
             return response.data
         })
     },
-    follow(id:number) {
-        return responsibility.post(`follow/${id}`).then(response => {
+    unfollow(id: number) {
+        return instance.delete(`follow/${id}`).then(response => {
             return response.data
         })
     }
 }
-// export const profileAPI = {
-//     getUserProfilePage (userId: string) {
-//         return responsibility.get(`${userId}`)
-//     }
-//}
+export const profileAPI = {
+    getProfile (userId: number) {
+        return instance.get(`profile/${userId}`)
+    }
+}
 
 

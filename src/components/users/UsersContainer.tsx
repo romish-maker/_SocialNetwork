@@ -1,39 +1,17 @@
 import React from 'react';
 import {connect, ConnectedProps} from 'react-redux';
 import {RootStateType} from '../../redux/redux-store';
-import {
-    follow,
-    setCurrentPage,
-    setUsers,
-    setTotalUsersCount,
-    toggleIsFetching,
-    unFollow,
-    UsersType, toggleFollowingProgress
-} from '../../redux/users-reducer';
+import {follow, getUsers, setCurrentPage, unfollow, UsersType} from '../../redux/users-reducer';
 import {Users} from './Users';
 import {Preloader} from "../common/Preloader/Preloader";
-import {usersAPI} from "../../api/api";
 
 export class UsersContainer extends React.Component<TProps> {
     componentDidMount() {
-        this.props.toggleIsFetching(true)
-
-       usersAPI.getUsers()
-            .then(data => {
-                this.props.toggleIsFetching(false)
-                this.props.setUsers(data.items)
-                this.props.setTotalUsersCount(data.totalCount)
-            });
+        this.props.getUsers(this.props.currentPage, this.props.pageSize);
     }
 
     onPageChanged = (pageNumber: number) => {
-        this.props.toggleIsFetching(true)
-        this.props.setCurrentPage(pageNumber);
-        usersAPI.getUsers(pageNumber)
-            .then(response => {
-                this.props.toggleIsFetching(false)
-                this.props.setUsers(response.data.items)
-            });
+        this.props.getUsers(pageNumber, this.props.pageSize);
     }
 
     render() {
@@ -45,8 +23,7 @@ export class UsersContainer extends React.Component<TProps> {
                    onPageChanged={this.onPageChanged}
                    users={this.props.users}
                    follow={this.props.follow}
-                   unFollow={this.props.unFollow}
-                   toggleFollowingProgress={this.props.toggleFollowingProgress}
+                   unfollow={this.props.unfollow}
                    followingProgress={this.props.followingProgress}
             />
         </>
@@ -81,12 +58,9 @@ const mapStateToProps = (state: RootStateType): mapStateToPropsType => {
 
 const connector = connect(mapStateToProps, {
     follow,
-    unFollow,
-    setUsers,
+    unfollow,
     setCurrentPage,
-    setTotalUsersCount,
-    toggleIsFetching,
-    toggleFollowingProgress
+    getUsers
 })
 type TProps = ConnectedProps<typeof connector>
 
