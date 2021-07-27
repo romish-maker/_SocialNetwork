@@ -4,8 +4,11 @@ import {RootStateType} from '../../redux/redux-store';
 import {follow, getUsers, setCurrentPage, unfollow, UsersType} from '../../redux/users-reducer';
 import {Users} from './Users';
 import {Preloader} from "../common/Preloader/Preloader";
+import {withAuthRedirect} from "../../hoc/WithAuthRedirect";
 
-export class UsersContainer extends React.Component<TProps> {
+type UserContainerType = MapDispatchToProps & MapStateToProps
+
+export class UsersContainer extends React.Component<UserContainerType> {
     componentDidMount() {
         this.props.getUsers(this.props.currentPage, this.props.pageSize);
     }
@@ -31,7 +34,7 @@ export class UsersContainer extends React.Component<TProps> {
 }
 
 
-type mapStateToPropsType = {
+type MapStateToProps = {
     users: UsersType[]
     pageSize: number
     totalUsersCount: number
@@ -39,7 +42,7 @@ type mapStateToPropsType = {
     isFetching: boolean
     followingProgress: number[]
 }
-const mapStateToProps = (state: RootStateType): mapStateToPropsType => {
+const mapStateToProps = (state: RootStateType): MapStateToProps => {
     const {pageSize} = state.usersPage
     const {totalUsersCount} = state.usersPage
     const {users} = state.usersPage
@@ -55,15 +58,18 @@ const mapStateToProps = (state: RootStateType): mapStateToPropsType => {
         followingProgress
     }
 }
+type MapDispatchToProps = {
+    follow: (userId: number) => void
+    unfollow: (userId: number) => void
+    setCurrentPageAC: (pageNumber: number) => void
+    getUsers: (currentPage: number, pageSize: number) => void
+}
 
-const connector = connect(mapStateToProps, {
+export default withAuthRedirect(connect(mapStateToProps, {
     follow,
     unfollow,
     setCurrentPage,
-    getUsers
-})
-type TProps = ConnectedProps<typeof connector>
-
-export default connector(UsersContainer)
+    getUsers,
+})(UsersContainer));
 
 
