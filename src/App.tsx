@@ -10,6 +10,7 @@ import Login from "./components/Login/Login";
 import {connect} from "react-redux";
 import {RootStateType} from "./redux/redux-store";
 import {Preloader} from "./components/common/Preloader/Preloader";
+import {compose} from "redux";
 
 type AppPropsType = {
     isFetching: boolean
@@ -23,7 +24,7 @@ function App(props:AppPropsType) {
                 <div className={'app-wrapper-content'}>
                     <Route path={'/profile/:userId?'}
                            render={() =>
-                               <ProfileContainer />
+                               <ProfileContainer  />
                            }/>
                     <Route
                         path={'/dialogs'}
@@ -48,7 +49,9 @@ function App(props:AppPropsType) {
         </div>
     );
 }
-const mapStateToProps = (state: RootStateType) => ({
+const MapStateToPropsType = (state: RootStateType) => ({
     isFetching: state.auth.isFetching
 })
-export default connect(mapStateToProps)(App);
+export default compose<React.ComponentType>(
+    connect(MapStateToPropsType)
+)(App)
