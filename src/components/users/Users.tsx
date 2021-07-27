@@ -24,17 +24,6 @@ export const Users = (props: UsersPropsType) => {
         pages.push(i)
     }
     return <div>
-        <div>
-            {
-                pages.map((p,i) => {
-                    return <span key={i}
-                        className={props.currentPage === p ? `${styles.selectedPage}` : `${styles.selected}`}
-                        onClick={() => {
-                            props.onPageChanged(p)
-                        }}>{p}</span>
-                })
-            }
-        </div>
         {
             props.users.map(u => <div key={u.id}>
                     <span>
@@ -70,6 +59,17 @@ export const Users = (props: UsersPropsType) => {
                     </span>
             </div>)
         }
+        <div>
+            {
+                pages.map((p,i) => {
+                    return <span key={i}
+                                 className={props.currentPage === p ? `${styles.selectedPage}` : `${styles.selected}`}
+                                 onClick={() => {
+                                     props.onPageChanged(p)
+                                 }}>{p}</span>
+                })
+            }
+        </div>
     </div>
 
 };
