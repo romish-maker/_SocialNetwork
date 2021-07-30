@@ -13,8 +13,10 @@ import {ProfileStatus} from './ProfileStatus'
 
 type ProfileInfoPropsType = {
     profile: ProfileResponseType | null
+    status: string | null
+    updateStatusProfile: (status: string) => void
 }
-const ProfileInfo = (props: ProfileInfoPropsType) => {
+const   ProfileInfo = (props: ProfileInfoPropsType) => {
     if (!props.profile) {
         return <Preloader/>
     }
@@ -25,7 +27,7 @@ const ProfileInfo = (props: ProfileInfoPropsType) => {
                     ? props.profile.photos.large
                     : undefined
                 } alt="ava"/>
-                <ProfileStatus status={"hello my name's romish"}/>
+                <ProfileStatus status={props.status} updateStatusProfile={props.updateStatusProfile}/>
             </div>
             <div>
                 <span>

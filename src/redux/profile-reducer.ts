@@ -6,14 +6,14 @@ export type ProfilePageType = {
     newPostText: string
     posts: Array<PostsType>
     profile: ProfileResponseType | null
-
+    status: string
 }
 export type PostsType = {
     id: number
     postMessage: string
     likesCount: number
 }
-const initialState:ProfilePageType = {
+const initialState: ProfilePageType = {
     posts: [
         {id: 1, postMessage: 'Это я 1st post', likesCount: 12},
         {id: 2, postMessage: 'Heeey yooo', likesCount: 42},
@@ -21,8 +21,9 @@ const initialState:ProfilePageType = {
         {id: 4, postMessage: 'Kotik 2d post', likesCount: 43},
     ],
     newPostText: 'Romish',
-    profile: null
-}
+    profile: null,
+    status: ""
+};
 
 
 export const profileReducer = (state: ProfilePageType = initialState, action: profileReducerType): ProfilePageType => {
@@ -33,7 +34,7 @@ export const profileReducer = (state: ProfilePageType = initialState, action: pr
                 postMessage: state.newPostText,
                 likesCount: 25
             }
-            return{
+            return {
                 ...state,
                 posts: [...state.posts, newPost],
                 newPostText: ''
@@ -50,17 +51,26 @@ export const profileReducer = (state: ProfilePageType = initialState, action: pr
                 profile: action.profile
             };
         }
+        case 'SET-STATUS': {
+            return {
+                ...state,
+                status: action.status
+            };
+        }
         default:
             return state;
     }
 }
 
-export type profileReducerType = AddPostActionType | UpdateNewPostTextActionType | setUserProfileActionType
+// generally type for action
+export type profileReducerType =
+    AddPostActionType
+    | UpdateNewPostTextActionType
+    | setUserProfileActionType
+    | setStatusActionType
 
-export type AddPostActionType = ReturnType<typeof AddPostActionCreator>
-export type UpdateNewPostTextActionType = ReturnType<typeof UpdateNewPostTextActionCreator>
-export type setUserProfileActionType = ReturnType<typeof setUserProfile>
 
+// action creators
 export const AddPostActionCreator = () => {
     return {
         type: 'ADD-POST'
@@ -72,14 +82,46 @@ export const UpdateNewPostTextActionCreator = (newText: string) => {
         newText: newText
     } as const
 }
+export const setStatusActionCreator = (status: string) => {
+    return {
+        type: 'SET-STATUS',
+        status
+    } as const
+}
+
 export const setUserProfile = (profile: ProfileResponseType) => {
     return {
         type: 'SET-USER-PROFILE',
         profile
     } as const
 }
+// thunk creators
 export const getUserProfile = (userId: number) => (dispatch: StoreDispatchType) => {
     profileAPI.getProfile(userId)
-        .then(response => {dispatch(setUserProfile(response.data));
+        .then(response => {
+            dispatch(setUserProfile(response.data));
         })
 }
+export const getStatusProfile = (userId: number) => (dispatch: StoreDispatchType) =>  {
+    profileAPI.getStatus(userId)
+        .then(response => {
+            dispatch(setStatusActionCreator(response.data))
+        })
+}
+export const updateStatusProfile = (status: string) => (dispatch: StoreDispatchType) => {
+    profileAPI.updateStatus(status)
+        .then(response => {
+            if (response.data.resultCode === 0) {
+                dispatch(setStatusActionCreator(status));
+            }
+        }).catch(err => alert(err));
+}
+
+
+
+
+
+export type AddPostActionType = ReturnType<typeof AddPostActionCreator>
+export type UpdateNewPostTextActionType = ReturnType<typeof UpdateNewPostTextActionCreator>
+export type setUserProfileActionType = ReturnType<typeof setUserProfile>
+export type setStatusActionType = ReturnType<typeof setStatusActionCreator>

@@ -20,7 +20,7 @@ export const authAPI = {
         return instance.get(`auth/me`)
     }
 }
-export const followAPI = {
+export const followAPI =  {
     follow(id:number) {
          return instance.post(`follow/${id}`).then(response => {
             return response.data
@@ -35,6 +35,12 @@ export const followAPI = {
 export const profileAPI = {
     getProfile (userId: number) {
         return instance.get(`profile/${userId}`)
+    },
+    getStatus(userId: number) {
+        return instance.get(`profile/status/${userId}`)
+    },
+    updateStatus(status: string) {
+        return instance.put(`profile/status`, {status})
     }
 }
 
