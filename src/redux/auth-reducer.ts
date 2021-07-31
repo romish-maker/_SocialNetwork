@@ -48,9 +48,10 @@ export const authReducer = (state: AuthType = initialState, action: AuthReducerT
 
 
 export type SetUserDataActionType = ReturnType<typeof setAuthUserDate>
-export type setIsFetchingActionType = ReturnType<typeof setIsFetching>
+export type SetIsFetchingActionType = ReturnType<typeof setIsFetching>
+export type SetAuthUserDateActionType = ReturnType<typeof setAuthUserDate>
 
-export type AuthReducerType = SetUserDataActionType | setIsFetchingActionType
+export type AuthReducerType = SetUserDataActionType | SetIsFetchingActionType| SetAuthUserDateActionType
 
 export const setAuthUserDate = (id: number, email: string, login: string) => {
     return {

@@ -9,26 +9,14 @@ import {Provider} from "react-redux";
 
 
 ReactDOM.render(
-        <React.StrictMode>
             <BrowserRouter>
                 <Provider store={store}>
                     <App />,
                 </Provider>
-            </BrowserRouter>
-        </React.StrictMode>,
+            </BrowserRouter>,
         document.getElementById('root')
     );
 
-// ReactDOM.render(
-//     <React.StrictMode>
-//         <BrowserRouter>
-//             <Provider store={store}>
-//                 <App />,
-//             </Provider>
-//         </BrowserRouter>
-//     </React.StrictMode>,
-//     document.getElementById('root')
-// );
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

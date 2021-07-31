@@ -1,11 +1,11 @@
 import React from 'react';
 import Header from "./Header";
 import {connect, ConnectedProps} from "react-redux";
-import {getAuthUserData} from "../../redux/auth-reducer";
 import {RootStateType} from "../../redux/redux-store";
+import {getAuthUserData} from "../../redux/auth-reducer";
 
 
-class HeaderContainer extends React.Component<TProps> {
+export class HeaderContainer extends React.Component<TProps> {
     componentDidMount() {
       this.props.getAuthUserData()
     }
@@ -23,7 +23,7 @@ const mapStateToProps = (state: RootStateType) => ({
     isAuth: state.auth.isAuth,
     login: state.auth.login
 })
-const connector = connect(mapStateToProps, {getAuthUserData});
+export const connector = connect(mapStateToProps, {getAuthUserData});
 
 export type TProps = ConnectedProps<typeof connector>
 

@@ -1,8 +1,14 @@
 import React, {ChangeEvent, KeyboardEvent} from 'react';
+import {RootStateType} from "../../../redux/redux-store";
 
 export type ProfileStatusPropsType = {
     status: string | null
     updateStatusProfile: (status: string) => void
+}
+
+type LocalStateType = {
+    editMode: boolean
+    status: string | null
 }
 
 export class ProfileStatus extends React.Component<ProfileStatusPropsType> {
@@ -31,30 +37,38 @@ export class ProfileStatus extends React.Component<ProfileStatusPropsType> {
         if (e.key === 'Enter') {
             this.deactivateEditMode()
         }
-}
+    }
+
+    componentDidUpdate(prevProps: ProfileStatusPropsType, prevState: LocalStateType,) {
+        if (prevProps.status !== this.props.status) {
+            this.setState({
+                status: this.props.status
+            });
+        }
+    }
 
     render() {
         return (
             <div>
                 {!this.state.editMode
-                    && <div>
-                        <span onDoubleClick={this.activateEditMode}>{this.props.status || '------'}</span>
-                      </div>
-                }
-                { this.state.editMode &&
-                    <div>
-                        <input
-                            autoFocus
-                            onBlur={this.deactivateEditMode}
-                            type="text"
-                            value={this.state.status || '' }
-                            onChange={this.onStatusChange}
-                            onKeyPress={this.onPressEnter}
-                            placeholder={'Что расскажете нового?'}
-                        />
-                    </div>
-                }
+                && <div>
+                    <span onDoubleClick={this.activateEditMode}>{this.props.status || '------'}</span>
                 </div>
+                }
+                {this.state.editMode &&
+                <div>
+                    <input
+                        autoFocus
+                        onBlur={this.deactivateEditMode}
+                        type="text"
+                        value={this.state.status || ''}
+                        onChange={this.onStatusChange}
+                        onKeyPress={this.onPressEnter}
+                        placeholder={'Что расскажете нового?'}
+                    />
+                </div>
+                }
+            </div>
         );
     }
 }

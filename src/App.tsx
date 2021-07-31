@@ -6,7 +6,7 @@ import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import UsersContainer from "./components/users/UsersContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
-import Login from "./components/Login/Login";
+import {Login} from "./components/Login/Login";
 import {connect} from "react-redux";
 import {RootStateType} from "./redux/redux-store";
 import {Preloader} from "./components/common/Preloader/Preloader";
@@ -40,8 +40,8 @@ function App(props:AppPropsType) {
                     />
                     <Route
                         path={'/login'}
-                        render={() =>
-                            <Login />
+                       render={() =>
+                           <Login />
                         }
                     />
                 </div>
