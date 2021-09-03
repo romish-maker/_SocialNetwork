@@ -8,28 +8,15 @@ import {Field} from "redux-form";
 
 type PropsType = {
     posts: Array<PostsType>
-    newPostText: string
-    UpdateNewPostText: (text: string) => void;
-    addPost: () => void;
+    addPost: (postMessage: string) => void;
 }
 
 const MyPosts: React.FC<PropsType> = (props) => {
     let postsElements =
         props.posts.map((p, i) => <Post key={i} message={p.postMessage} likesCount={p.likesCount}/>);
 
-    // const newPostElement = React.createRef<HTMLTextAreaElement>()
-    //
-    // let onAddPost = () => {
-    //     props.addPost()
-    // }
-    // let onPostChange = () => {
-    //     if (newPostElement.current) {
-    //         let text = newPostElement.current.value
-    //         props.UpdateNewPostText(text)
-    //     }
-    // }
-    const onSubmit = (formData: any) => {
-        console.log(formData);
+    const onSubmit = (formData: AddPostsMessagePropsType) => {
+        props.addPost(formData.newMessagePostBody)
     }
     return (
         <div className={s.postsBlock}>
@@ -41,12 +28,17 @@ const MyPosts: React.FC<PropsType> = (props) => {
         </div>
     )
 }
-export const AddPostsMessage: React.FC<InjectedFormProps> = (props) => {
+
+type AddPostsMessagePropsType = {
+    newMessagePostBody: string
+}
+
+export const AddPostsMessage: React.FC<InjectedFormProps<AddPostsMessagePropsType>> = (props) => {
     const {handleSubmit} = props
     return (
         <form onSubmit={handleSubmit}>
             <div>
-                <Field component="textarea" name="newMessageBody" placeholder="Enter your message"/>
+                <Field component="textarea" name="newMessagePostBody" placeholder="Enter your message"/>
             </div>
             <div>
                 <button>Add post</button>
@@ -54,7 +46,7 @@ export const AddPostsMessage: React.FC<InjectedFormProps> = (props) => {
         </form>
     )
 }
-const AddMessageFormRedux = reduxForm({form: "myPostAddPostsMessage"})
+const AddMessageFormRedux = reduxForm<AddPostsMessagePropsType>({form: "myPostAddPostsMessage"})
 (AddPostsMessage)
 
 export default MyPosts;

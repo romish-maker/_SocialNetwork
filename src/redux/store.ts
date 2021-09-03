@@ -1,10 +1,5 @@
-import {AddPostActionType, PostsType, profileReducer, UpdateNewPostTextActionType} from "./profile-reducer";
-import {
-    DialogPageType,
-    dialogsReducer,
-    SendBodyMessageActionCreator,
-    UpdateNewBodyMessageActionCreator
-} from "./dialogs-reducer";
+import {AddPostActionType, PostsType, profileReducer} from "./profile-reducer";
+import {DialogPageType, dialogsReducer, SendBodyMessageActionCreator,} from "./dialogs-reducer";
 import {sidebarReducer, SidebarType} from "./sidebar-reducer";
 
 type StoreType = {
@@ -16,9 +11,7 @@ type StoreType = {
 }
 
 export type ActionsTypes =
-    UpdateNewPostTextActionType
     | AddPostActionType
-    | UpdateNewBodyMessageActionCreator
     | SendBodyMessageActionCreator
 
 
@@ -68,8 +61,6 @@ let store: any = {
         this._CallSubscriber()
     }
 }
-
-
 
 
 type ProfilePageType = {

@@ -3,7 +3,6 @@ import {StoreDispatchType} from "./redux-store";
 import {profileAPI} from "../api/api";
 
 export type ProfilePageType = {
-    newPostText: string
     posts: Array<PostsType>
     profile: ProfileResponseType | null
     status: string
@@ -20,7 +19,6 @@ const initialState: ProfilePageType = {
         {id: 3, postMessage: 'интересная новость', likesCount: 992},
         {id: 4, postMessage: 'Kotik 2d post', likesCount: 43},
     ],
-    newPostText: 'Romish',
     profile: null,
     status: ""
 };
@@ -31,20 +29,13 @@ export const profileReducer = (state: ProfilePageType = initialState, action: pr
         case 'ADD-POST':
             const newPost: PostsType = {
                 id: new Date().getTime(),
-                postMessage: state.newPostText,
+                postMessage: action.newPostText,
                 likesCount: 25
             }
             return {
                 ...state,
                 posts: [...state.posts, newPost],
-                newPostText: ''
             };
-        case 'UPDATE-NEW-POST-TEXT': {
-            return {
-                ...state,
-                newPostText: action.newText
-            };
-        }
         case 'SET-USER-PROFILE': {
             return {
                 ...state,
@@ -65,21 +56,15 @@ export const profileReducer = (state: ProfilePageType = initialState, action: pr
 // generally type for action
 export type profileReducerType =
     AddPostActionType
-    | UpdateNewPostTextActionType
     | setUserProfileActionType
     | setStatusActionType
 
 
 // action creators
-export const AddPostActionCreator = () => {
+export const AddPostActionCreator = (newPostText: string) => {
     return {
-        type: 'ADD-POST'
-    } as const
-}
-export const UpdateNewPostTextActionCreator = (newText: string) => {
-    return {
-        type: 'UPDATE-NEW-POST-TEXT',
-        newText: newText
+        type: 'ADD-POST',
+        newPostText
     } as const
 }
 export const setStatusActionCreator = (status: string) => {
@@ -122,6 +107,5 @@ export const updateStatusProfile = (status: string) => (dispatch: StoreDispatchT
 
 
 export type AddPostActionType = ReturnType<typeof AddPostActionCreator>
-export type UpdateNewPostTextActionType = ReturnType<typeof UpdateNewPostTextActionCreator>
 export type setUserProfileActionType = ReturnType<typeof setUserProfile>
 export type setStatusActionType = ReturnType<typeof setStatusActionCreator>
